@@ -10,7 +10,7 @@ import java.util.HashSet;  // 집합
 
 public class App {
     public static void main(String[] args) {
-        // 기본형
+        // 기본형 Primitive datatype
         int intVal = 10;    // 4byte
         long lngVal = 98324172943724987l; // 8byte 길이가 지정됨
         float fltVal = 3.141592f; // 4byte
