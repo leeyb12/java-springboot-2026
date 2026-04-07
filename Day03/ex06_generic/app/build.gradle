@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'ex05_fileio.App'
+    mainClass = 'ex06_generic.App'
 }
 
 tasks.named('test') {
