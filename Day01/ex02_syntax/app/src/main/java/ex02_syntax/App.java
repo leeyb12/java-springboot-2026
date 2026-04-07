@@ -21,7 +21,7 @@ public class App {
 
         // 기본 클래스형, 특수한 이유로 기본형을 클래스화 시킨 타입
         Integer IntValue = 10;
-        Long LngValue;
+        Long LngValue = 98324172943724987l;
         Float FltValue;
         Double DblValue;
         Character ChrValue;
