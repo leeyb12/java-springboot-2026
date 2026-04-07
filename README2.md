@@ -99,7 +99,7 @@
     - `21` 선택
     - 설치된 JDK 자바버전과 동일
 
-9. Choose dependencies 
+9. Choose dependencies - [소스](./Day03/demo/build.gradle)
     - 필요한 의존성(라이브러리) 선택
     - 최초 Spring Web만 선택
 
@@ -107,11 +107,13 @@
 
 11. 새 창 열기
 
-12. Gradle, Java 빌드 진행
+12. Gradle, Java 빌드 진행 - [소스](./Day03/demo/src/main/java/com/pknu26/demo/DemoApplication.java)
     - 빌드 이후 작업표시줄 `Java: Ready`가 표시되야 함
     - Java: Error는 프로젝트 생성 실패. 새로 구성 
 
     ![alt text](image-16.png)
+
+
 
 #### Spring Boot 프로젝트 실행
 
@@ -131,11 +133,11 @@
 
     ![alt text](image-19.png)
 
-5. application.properties 오픈
+5. application.properties 오픈 - [소스](./Day03/demo/src/main/resources/application.properties)
     `spring.output.ansi.enabled=always` 작성
 
 #### Spring Boot 필요 설정 확인
-- build.gradle : 자바버전, 플러그인, 의존성 설정 파일
+- build.gradle : 자바버전, 플러그인, 의존성 설정 파일 - [소스](./Day03/demo/build.gradle)
 
     ```groovy
     // Gradle 플러그인 설정
@@ -173,7 +175,7 @@
 
   - dependencies 외에는 거의 손댈일 없음
 
-- DemoApplication.java
+- DemoApplication.java - [소스](./Day03/demo/src/main/java/com/pknu26/demo/DemoApplication.java)
   - @SpringBootApplication : 스프링부트 설정 클래스임 지칭. 컴포넌트 스캔 수행. 자동설정 어노테이션
   - SpringApplication.run(...) : 스프링 컨테이너 실행, 내장 서버(톰캣) 띄움
 
@@ -210,10 +212,10 @@
     - 브라우저 요청 -> Controller 호출 -> Model을 데이터 담고(Service) -> View 반환 -> 요청한 브라우저에 돌려줌
 
 - Spring MVC 구현
-  1. Service/MessageService.java 생성
-  2. Controller.HomeController.java 생성
+  1. Service/MessageService.java 생성 - [소스](./Day03/springmvc/src/main/java/com/pknu26/springmvc/Service/MessageService.java)
+  2. Controller.HomeController.java 생성 - [소스](./Day03/springmvc/src/main/java/com/pknu26/springmvc/Controller/HomeController.java)
     - 필요한 그룹에 따라 여러개 컨트롤러를 만들 수 있음
-  3. View, src/main/resources/templates/home.html 생성
+  3. View, src/main/resources/templates/home.html 생성 - [소스](./Day03/springmvc/src/main/resources/templates/home.html)
   4. 기본 순서는 Controller, Service와 View 순
   5. 소스코드 작성, 수정 이후 서버 재시작 필수!
 
@@ -231,7 +233,7 @@
 #### Spring Log 
 
 - 로그 출력 작업
-  - application.properties에 로그 설정
+  - application.properties에 로그 설정 - [소스](./Day03/springlog/src/main/resources/application.properties)
   
   ```
   ## 스프링부트 내장 로그모듈 사용
@@ -240,11 +242,13 @@
   logging.file.name = /testlog.log
   ```
 
-- 로그 사용법
+- 로그 사용법 - [소스](./Day03/springlog/src/main/java/com/pknu26/springlog/HomeController.java)
   - Controller, Service, Respository 클래스에서 사용가능
   
 #### Spring Log 배너
 - 중요도 없음
 
-- resources 폴더에 banner.txt 생성
+- resources 폴더에 banner.txt 생성 - [소스](./Day03/springlog/src/main/resources/banner.txt)
 - [Spring Boot Banner Generator](https://devops.datenkollektiv.de/banner.txt/index.html)
+
+  ![alt text](image-20.png)
