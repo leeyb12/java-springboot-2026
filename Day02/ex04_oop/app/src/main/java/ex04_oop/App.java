@@ -31,13 +31,10 @@ public class App {
             Student(String name, int age, int score) {
                 this.name = name;
                 this.age = age;
-                this.score = score;
             }
             // 멤버변수(필드)
             String name;
             int age;
-            int score;
-
             // 멤버메서드
             void introduce() {
                 System.out.println("학생이름 : " + name + ", 나이 : " + age);
@@ -48,7 +45,7 @@ public class App {
         Student std1 = new Student(); // 객체 생성 후 기본생성자
         std1.name = "Kim"; // 각 멤버변수에 값 할당
         std1.age = 20;
-        std1.score = 95;
+        
 
         // Student std2 = new Student();
         // std2.name = "Lee";

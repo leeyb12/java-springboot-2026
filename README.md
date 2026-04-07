@@ -703,7 +703,7 @@ public class App {   // 클래스 선언
 
 #### VS Code Tip
 
-![alt text](image-14.png)
+![alt text](image-13.png)
 
 - Code snippet : 코딩 문법을 자동 생성해주는 기능
 
