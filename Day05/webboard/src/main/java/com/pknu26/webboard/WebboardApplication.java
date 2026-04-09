@@ -1,13 +1,13 @@
-package com.pknu26.restapi;
+package com.pknu26.webboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestapiApplication {
+public class WebboardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestapiApplication.class, args);
-		System.out.println("TEST");
+		SpringApplication.run(WebboardApplication.class, args);
 	}
+
 }

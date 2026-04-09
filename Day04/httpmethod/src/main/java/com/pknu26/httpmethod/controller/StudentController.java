@@ -7,13 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;  // GetMapping, PostMapping, RequestMapping 모두 사용하겠다
 
 import com.pknu26.httpmethod.entity.Student;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 @RequestMapping("/students")
 public class StudentController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass()); 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/list")
     public String getAllStudent() {
@@ -22,9 +23,9 @@ public class StudentController {
 
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("student", new Student());
+        model.addAttribute("student", new Student());  
         // student라는 이름의 모델을 Student 클래스 객체생성 후 create.html 페이지로 전달
-        return "create";  // create.html 과 연결
+        return "create";   // create.html 과 연결
     }
 
     @PostMapping("/create")
@@ -33,10 +34,10 @@ public class StudentController {
         logger.info(String.valueOf(student.getAge()));
 
         model.addAttribute("student", student);
-        // return "redirect:/students/list";  // 다시 첫화면으로 이동
+        // return "redirect:/students/list"; // 다시 첫화면으로 이동
         return "result";  // result.html 화면에 띄움
     }
-    
+
     @GetMapping("/search")
     public String search(@RequestParam String name, @RequestParam int age, Model model) {
         logger.info("검색 이름 : {}", name);
