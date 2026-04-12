@@ -688,6 +688,7 @@
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-validation'
 ```
+
 2. validation 폴더 생성
 
 3. BoardForm.js 생성
@@ -695,7 +696,7 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 5. Board_Service.java 생성
 6. Board_Controller.java 메서드 추가
 
-## 7일차
+## 7일차 - 잠시 수정
 
 ### Spring Boot webboard 계속
 
