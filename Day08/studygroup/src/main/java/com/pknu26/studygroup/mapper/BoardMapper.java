@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.pknu26.studygroup.dto.Board;
 
-// resources/mapper/BoardMapper.xml을 매핑
+// resources/mapper/BoardMapper.xml과 매핑!
 @Mapper
 public interface BoardMapper {
-
+    
     List<Board> findAll();
 
     Board findById(Long boardId);
@@ -19,4 +19,4 @@ public interface BoardMapper {
     int updateBoard(Board board);
 
     int deleteBoard(Long boardId);
-}
+} 

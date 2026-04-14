@@ -25,5 +25,4 @@ public class StudentService {
     public int addStudent(Student student) {
         return studentMapper.insert(student);
     }
-    
 }

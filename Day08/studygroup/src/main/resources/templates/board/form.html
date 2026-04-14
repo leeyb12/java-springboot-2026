@@ -7,7 +7,7 @@
   <div th:fragment="content" class="container my-3">
     <h3 th:text="'게시글 작성'"></h3>
 
-    <!--boardForm.boardId가 있으면 수정 -->
+    <!-- boardForm.boardId가 있으면 수정 -->
     <form
       th:object="${boardForm}"
       th:action="${boardForm != null and boardForm.boardId != null} ? @{|/board/edit/${boardForm.boardId}|} : @{/board/create}"
@@ -30,7 +30,12 @@
 
       <div class="row">
         <label for="writer" class="form-label">작성자</label>
-        <input type="text" id="writer" th:field="*{writer}" class="form-control" />
+        <input
+          type="text"
+          id="writer"
+          th:field="*{writer}"
+          class="form-control"
+        />
       </div>
       <div
         class="error alert alert-danger"
@@ -56,7 +61,7 @@
         <div class="col">
           <div class="text-end">
             <button type="submit" class="btn btn-sm btn-primary">
-              <i class="bi bi-floopy"></i> 저장
+              <i class="bi bi-floppy"></i> 저장
             </button>
             <a th:href="@{/board/list}" class="btn btn-sm btn-success">
               <i class="bi bi-list"></i> 목록

@@ -851,6 +851,8 @@ COMMIT;
 
 #### 게시판 테이블 생성
 
+- [소스](./Day08/studygroup/sql/board_schema.sql)
+
 ```sql
 -- 게시판
 CREATE TABLE BOARD (
@@ -871,6 +873,7 @@ NOCYCLE;
 ```
 
 #### Thymeleaf form Validation 의존성 추가
+
 ```groovys
 implementation 'org.springframework.boot:spring-boot-starter-validation'
 ```

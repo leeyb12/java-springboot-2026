@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Board {
 
-    private Long boardId;  // DB, board_id
+    private Long boardId;  // DB, board_id    
     private String title;
     private String content;
     private String writer;
-    private LocalDateTime createdAt;  // DB, created_at
-    private LocalDateTime updatedAt;  // DB, updated_at
+    private LocalDateTime createdAt; // DB, created_at
+    private LocalDateTime updatedAt; // DB, updated_at    
 }

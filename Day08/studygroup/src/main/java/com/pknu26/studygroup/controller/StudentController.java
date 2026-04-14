@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pknu26.studygroup.dto.Student;
 import com.pknu26.studygroup.service.StudentService;
 
+
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -20,14 +21,14 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping 
+    @GetMapping
     public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+        return this.studentService.getAllStudents();
     }
 
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable("id") Long id) {
-        return studentService.getStudentById(id);
+    public Student getStudentById(@PathVariable Long id) {
+        return this.studentService.getStudentById(id);
     }
 
     @PostMapping

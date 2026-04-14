@@ -1,5 +1,6 @@
 package com.pknu26.studygroup.service;
 
+// import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 // BoardService 인터페이스 구현 클래스
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
 
@@ -23,7 +24,7 @@ public class BoardServiceImpl implements BoardService{
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
         board.setWriter(boardForm.getWriter());
-        // board.setCreatedAt(LocalDateTime.now());    // SYSDATE default 때문에 생략가능
+        // board.setCreatedAt(LocalDateTime.now()); // SYSDATE default 때문에 생략가능
 
         this.boardMapper.insertBoard(board);
     }
@@ -35,7 +36,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board readBoardById(Long boardId) {
-       return this.boardMapper.findById(boardId);
+        return this.boardMapper.findById(boardId);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class BoardServiceImpl implements BoardService{
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
         board.setWriter(boardForm.getWriter());
-        // board.setCreatedAt(LocalDateTime.now());    // SYSDATE default 때문에 생략가능
+        // board.setUpdatedAt(LocalDateTime.now()); // SYSDATE default 때문에 생략가능
 
         this.boardMapper.updateBoard(board);
     }
@@ -54,5 +55,4 @@ public class BoardServiceImpl implements BoardService{
     public void deleteBoard(Long boardId) {
         this.boardMapper.deleteBoard(boardId);
     }
-
 }

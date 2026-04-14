@@ -15,6 +15,6 @@ public interface BoardService {
     Board readBoardById(Long boardId);
 
     void updateBoard(BoardForm boardForm);
-
+    
     void deleteBoard(Long boardId);
-}
+} 
