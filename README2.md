@@ -651,11 +651,11 @@
 #### Board 작업 순서 1
 
 1. BoardController 생성 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/controller/BoardController.java)
-2. html 생성
-3. Board 생성
-4. BoardRepository 생성
-5. BoardService 생성
-6. BoardController 수정
+2. board_list.html 생성 - [소스](./Day06/webboard/src/main/resources/templates/board_list.html)
+3. Board 생성 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/entity/Board.java)
+4. BoardRepository 생성 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/repository/BoardRepository.java)
+5. BoardService 생성 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/service/BoardService.java)
+6. BoardController 수정 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/controller/BoardController.java)
 
 #### Thymeleaf 레이아웃
 
@@ -663,7 +663,7 @@
   - ~~thymeleaf-layout-dialect 의존성 없으면 동작안함~~
   - ~~build.gradle 추가~~
   - Spring 4.x 에서 thymeleaf layout 라이브러리 제대로 동작안함
-  - layout.html
+  - layout.html - [소스](./Day06/webboard/src/main/resources/templates/layout.html)
     - th:fragment="layout(content)"
     - th:replace="${content}"
   - list.html
@@ -675,7 +675,7 @@
 - 방법 1 : Bootstrap 관련 리소스 다운로드 후 static 폴더 저장
 - `방법 2` : CDN으로 링크를 사용. 실행시 캐시에 다운로
   - https://getbootstrap.com/
-  - layout.html 리소스 태그 추가
+  - layout.html 리소스 태그 추가 - [소스](./Day06/webboard/src/main/resources/templates/layout.html)
 
     ![alt text](image-24.png)
 
@@ -691,15 +691,137 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 2. validation 폴더 생성
 
-3. BoardForm.js 생성
-4. board_create.html 생성
-5. Board_Service.java 생성
-6. Board_Controller.java 메서드 추가
+3. BoardForm.js 생성 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/validation/BoardForm.java)
+4. board_create.html 생성 - [소스](./Day06/webboard/src/main/resources/templates/board_create.html)
+5. BoardService.java 추가 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/service/BoardService.java)
+6. BoardController.java 메서드 추가 - [소스](./Day06/webboard/src/main/java/com/pknu26/webboard/controller/BoardController.java)
 
-## 7일차 - 잠시 수정
+## 7일차
 
 ### Spring Boot webboard 계속
 
-#### Board 수정
+#### 추가 어노테이션
+
+- 일반
+  - @RequiredArgConstructor : `final` 멤버변수 파라미터를 생성자로 생성하는 Lombok 어노테이션
+  - @AllArgsConstructor : 클래스 모든 멤버변수를 파라미터로 생성자 생성
+  - @NoArgsConstructor : 기본 생성자를 자동으로 생성
+
+- DB 모델용
+  - @OneToMany : DB모델링 1대다 ERD관계를 entity내 클래스에서 설정.
+  - @ManyToOne : 다대1 ERD관계를 설정
+
+#### Board 작업
+
+- 게시글 수정
+  - board_create.html을 create와 modify 모드로 분리
+  - board_detail.html을 수정 버튼 추가
+  - BoardController에 /modify/{bno} GetMapping, PostMapping 작업
+  - BoardService에 putBoardOne 메서드 작업
+  
+- 게시글 삭제
+  - board_detail.html을 삭제 버튼 추가
+  - BoardController에 /delete/{bno} GetMapping 메서드 추가
+  - BoardService에 deleteBoardOne 메서드 작업
 
 #### Reply 작업
+
+- entity/Reply 클래스
+  - 이전 Board 클래스 생성시와 동일
+  - Board board 멤버변수를 @ManToOne으로 추가
+
+- entity/Board 클래스
+  - `List<Reply>` replyList 멤버변수, @OneToMany로 추가
+
+- repository/ReplyRepository 인터페이스 생성
+- ReplyService 클래스 생성, setReply() 메서드 작성
+- validation/ReplyForm 클래스 생성
+- controller/ReplyController 클래스 생성
+- controller/BoardController 클래스 내 showDetail() 메서드 ReplyForm 파라미터 추가
+- templatates/board_detail.html 댓글 영역 코드 추가
+
+#### H2 DB에서 Oracle로 전환
+
+- application.properties에 H2관련설정을 Oracle로 변경
+- 시퀀스 문제(increment 50) 해결
+- Board content 길이문제 해결
+  - Oracle에서는 VARCHAR2(4000) 이상 사용못함. 4000자 이상 불가능
+  - 긴 글, 이미지, 영화 등 대용량 데이터를 저장시 LOB(Large OBject) 타입 사용
+  - CLOB(Charactor LOB), BLOB(Binary LOB)
+
+  ![alt text](image-25.png)
+
+#### MyBatis Spring Boot
+
+- Spring Boot 4.0.5
+- JDK 21
+- Gradle 9.x
+- Oracle 21
+- MyBatis
+- REST API 테스트
+- Spring MVC
+
+#### 프로젝트 생성
+
+- Spring Initializer : Create a Gradle Project...
+- Artifact ID : studygroup
+- Choose dependencies
+  - Spring Boot DevTools
+  - Lombok
+  - Spring Web
+  - Oracle Driver
+  - Thymeleaf
+  - SpringDoc OpenAPI - swagger ui
+  - MyBatis Framework
+
+#### Oracle 사용자, 스키마 생성
+
+```sql
+-- StudyGroup 사용자, 스키마
+CREATE USER studygroup IDENTIFIED BY java12345;
+
+-- 권한
+GRANT ALL PRIVILEGES TO studygroup;
+```
+
+#### 테이블 생성
+
+```sql
+-- student 테이블
+CREATE TABLE student (
+   id NUMBER(10) PRIMARY KEY,
+   name VARCHAR2(100) NOT NULL,
+   age NUMBER(3),
+   major VARCHAR2(100)
+);
+
+-- 시퀀스
+CREATE SEQUENCE student_seq
+START WITH 1
+INCREMENT BY 1
+nocache;
+
+-- 샘플 데이터
+INSERT INTO student VALUES (student_seq.nextval, '홍길동', 20, '컴퓨터공학');
+INSERT INTO student VALUES (student_seq.nextval, '이영희', 22, '전자공학');
+
+COMMIT;
+```
+
+#### application.properties 설정
+
+- Oracle 설정
+- MyBatis 설정
+  ```properties
+  // MyBatis는 버전을 반드시 지정
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.1'
+  ```
+  
+#### MyBatis
+
+- 개발자가 작성한 SQL문을 매핑해서 지원하는 프레임워크
+- DB 쿼리를 xml로 Java 코드와 분리, 유지보수와 생산성을 높이는 기능
+- JPA : ORM 프레임워크와 달리 직접 쿼리를 작성
+- JPA가진 복잡한 쿼리 문제를 MyBatis로 해결
+
+
