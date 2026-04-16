@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 목록</title>
+    <style>
+        table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          margin-top: 20px; 
+        }
+        th, td { 
+          border: 1px solid #ddd; 
+          padding: 10px; 
+          text-align: left; 
+          font-size: 0.9em; 
+        }
+        th { 
+          background-color: #f8f9fa; 
+        }
+        .btn { 
+          padding: 6px 12px; 
+          text-decoration: none; 
+          background-color: #007bff; 
+          color: white; 
+          border-radius: 4px; 
+          font-size: 0.85em; 
+          display: inline-block; 
+        }
+        .btn-danger { 
+          background-color: #dc3545; 
+        }
+        .header-actions { 
+          margin-bottom: 20px; 
+        }
+        .pagination {
+          display: flex;
+          justify-content: center;
+          list-style: none;
+          padding: 0;
+          margin-top: 20px;
+        }
+        .page-item {
+          margin: 0 5px;
+        }
+        .page-link {
+          display: block;
+          padding: 8px 12px;
+          border: 1px solid #ddd;
+          color: #007bff;
+          text-decoration: none;
+          border-radius: 4px;
+        }
+        .page-item.active .page-link {
+          background-color: #007bff;
+          color: white;
+          border-color: #007bff;
+        }
+        .page-item.disabled .page-link {
+          color: #ccc;
+          background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>영화 관리 시스템</h1>
+    
+    <div class="header-actions">
+        <a th:href="@{/movies/add}" class="btn">새 영화 등록</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>제목</th>
+                <th>원제</th>
+                <th>감독</th>
+                <th>장르</th>
+                <th>개봉일</th>
+                <th>상영시간</th>
+                <th>평점</th>
+                <th>관리</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="movie : ${movies}">
+                <td th:text="${movie.movieId}">1</td>
+                <td>
+                    <a th:href="@{/movies/{id}(id=${movie.movieId})}" th:text="${movie.title}">제목</a>
+                </td>
+                <td th:text="${movie.originalTitle}">원제</td>
+                <td th:text="${movie.director}">감독</td>
+                <td th:text="${movie.genre}">장르</td>
+                <td th:text="${movie.releaseDate}">2024-01-01</td>
+                <td th:text="${movie.runningTime + '분'}">120분</td>
+                <td th:text="${movie.rating}">8.5</td>
+                <td>
+                    <a th:href="@{/movies/edit/{id}(id=${movie.movieId})}" class="btn">수정</a>
+                    <a th:href="@{/movies/delete/{id}(id=${movie.movieId})}" 
+                       class="btn btn-danger" 
+                       onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(movies)}">
+                <td colspan="8" style="text-align: center;">등록된 영화가 없습니다.</td>
+            </tr>
+        </tbody>
+    </table>
+    <nav th:if="${!#lists.isEmpty(movies)}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!response.prev} ? 'disabled'">
+                <a class="page-link" th:href="@{/movies(page=${response.startPage - 1})}">◀</a>
+            </li>
+
+            <li class="page-item" 
+                th:each="pageNum : ${#numbers.sequence(response.startPage, response.endPage)}"
+                th:classappend="${pageNum == response.currentPage} ? 'active'">
+                <a class="page-link" 
+                   th:href="@{/movies(page=${pageNum})}" 
+                   th:text="${pageNum}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="${!response.next} ? 'disabled'">
+                <a class="page-link" th:href="@{/movies(page=${response.endPage + 1})}">▶</a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>

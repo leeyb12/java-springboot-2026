@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pknu26.movie_mng.mapper.MovieMapper">
+
+    <select id="getAllMovies" resultType="Movie">
+        SELECT * FROM MOVIE ORDER BY MOVIE_ID ASC
+    </select>
+
+    <select id="getMovieById" parameterType="long" resultType="Movie">
+        SELECT * FROM MOVIE WHERE MOVIE_ID = #{movieId}
+    </select>
+
+    <select id="getMovieListWithPaging" resultType="com.pknu26.movie_mng.dto.Movie">
+        SELECT 
+            MOVIE_ID as movieId, 
+            TITLE, 
+            ORIGINAL_TITLE as originalTitle, 
+            DIRECTOR, 
+            GENRE, 
+            RELEASE_DATE as releaseDate, 
+            RUNNING_TIME as runningTime, 
+            RATING 
+        FROM MOVIE 
+        ORDER BY MOVIE_ID DESC 
+        OFFSET #{skip} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*) FROM MOVIE
+    </select>
+
+    <insert id="insertMovie" parameterType="Movie">
+        INSERT INTO MOVIE (
+            MOVIE_ID, TITLE, ORIGINAL_TITLE, DIRECTOR, ACTORS, 
+            GENRE, RELEASE_DATE, RUNNING_TIME, RATING, DESCRIPTION, 
+            CREATED_AT
+        ) VALUES (
+            SEQ_MOVIE.NEXTVAL, 
+            #{title, jdbcType=VARCHAR}, 
+            #{originalTitle, jdbcType=VARCHAR}, 
+            #{director, jdbcType=VARCHAR}, 
+            #{actors, jdbcType=VARCHAR}, 
+            #{genre, jdbcType=VARCHAR}, 
+            #{releaseDate, jdbcType=DATE}, 
+            #{runningTime, jdbcType=INTEGER}, 
+            #{rating, jdbcType=NUMERIC}, 
+            #{description, jdbcType=VARCHAR}, 
+            CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <update id="updateMovie" parameterType="Movie">
+        UPDATE MOVIE
+        SET TITLE = #{title},
+            ORIGINAL_TITLE = #{originalTitle},
+            DIRECTOR = #{director},
+            ACTORS = #{actors},
+            GENRE = #{genre},
+            RELEASE_DATE = #{releaseDate,},
+            RUNNING_TIME = #{runningTime},
+            RATING = #{rating},
+            DESCRIPTION = #{description},
+            UPDATED_AT = CURRENT_TIMESTAMP
+        WHERE MOVIE_ID = #{movieId}
+    </update>
+
+    <delete id="deleteMovie" parameterType="long">
+        DELETE FROM MOVIE WHERE MOVIE_ID = #{movieId}
+    </delete>
+
+</mapper>

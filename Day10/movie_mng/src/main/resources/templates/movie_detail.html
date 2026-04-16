@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 상세 정보</title>
+    <style>
+        .detail-container { 
+          max-width: 800px; 
+          margin: 20px auto; 
+          line-height: 1.6; 
+        }
+        .label { 
+          font-weight: bold; 
+          width: 120px; 
+          display: inline-block; 
+        }
+        .content { 
+          margin-bottom: 10px; 
+        }
+        .description { 
+          background: #f9f9f9; 
+          padding: 15px; 
+          border-radius: 5px; 
+          margin-top: 10px; 
+          border: 1px solid #ccc;
+        }
+        .actions { 
+          margin-top: 20px; 
+          border-top: 1px solid #eee; 
+          padding-top: 20px; 
+        }
+        .btn { 
+          padding: 8px 16px; 
+          text-decoration: none; 
+          color: #333; 
+          border: 1px solid #ccc; 
+          border-radius: 4px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <h1>영화 상세 정보</h1>
+        
+        <div class="content"><span class="label">ID:</span> <span th:text="${movie.movieId}"></span></div>
+        <div class="content"><span class="label">제목:</span> <span th:text="${movie.title}"></span></div>
+        <div class="content"><span class="label">원제:</span> <span th:text="${movie.originalTitle}"></span></div>
+        <div class="content"><span class="label">감독:</span> <span th:text="${movie.director}"></span></div>
+        <div class="content"><span class="label">배우:</span> <span th:text="${movie.actors}"></span></div>
+        <div class="content"><span class="label">장르:</span> <span th:text="${movie.genre}"></span></div>
+        <div class="content"><span class="label">개봉일:</span> <span th:text="${movie.releaseDate}"></span></div>
+        <div class="content"><span class="label">상영시간:</span> <span th:text="${movie.runningTime + '분'}"></span></div>
+        <div class="content"><span class="label">평점:</span> <span th:text="${movie.rating}"></span></div>
+        
+        <div class="content">
+            <span class="label">설명:</span>
+            <div class="description" th:text="${movie.description}">설명 내용</div>
+        </div>
+        
+        <div class="content"><span class="label">등록일:</span> <span th:text="${#dates.format(movie.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></div>
+        <div class="content" th:if="${movie.updatedAt != null}">
+            <span class="label">수정일:</span> <span th:text="${#dates.format(movie.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{/movies}" class="btn">목록으로</a>
+            <a th:href="@{/movies/edit/{id}(id=${movie.movieId})}" class="btn" style="background-color: #007bff; color: white; border: none;">수정하기</a>
+        </div>
+    </div>
+</body>
+</html>
