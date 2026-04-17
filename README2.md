@@ -1062,6 +1062,94 @@ NOCYCLE;
 - 필요 태그 복사/붙여넣기 
 - 필요 기능 추가
 
+## 11일차
+
+#### 게시판 계정 연결
+
+- 세션과 연결
+
+#### 게시판 이슈(현재 문제점)
+
+1. [ ] 게시글 상세에서 이름대신 로그인 아이디가 표시
+2. [x] 본인 글이 아닌게 수정됨
+3. [ ] 에디터 적용후 상세보기 화면깨짐
+
+- th:text -> th:utext 로 변경
+
+4. [ ] 게시판 다른 페이지에서 게시글 삭제 후 첫번째 페이지 전환
+5. [ ] 댓글 작성 및 삭제기능 아무나 가능
+6. [ ] Navigation 동작없는 검색 입력
+
+#### 게시판 웹에디터 적용
+
+- 티스토리 웹에디터 
+![alt text](image-33.png)
+
+- 웹데이터 리스트
+  - CK에디터 : https://ckeditor.com/ckeditor-5/ 유무료 웹에디터 1등
+  - `트럼보우YG` : https://alex-d.github.io/Trumbowyg/ 심플 무료 웹에디터
+
+- Trumbowyg 적용
+  1. trunbowyg 관련 css, js 파일 static 저장
+  2. layout.html
+
+  ```html
+  <!doctype html>
+  <!-- th:fragment에 pageScripts 추가 -->
+  <html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    th:fragment="layout(content, pageScripts)"
+    data-bs-theme="auto">
+  ...
+  <head>
+    <!-- trumbowyg용 css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/trumbowyg/ui/trumbowyg.min.css}"
+    />
+  </head>
+  <body>
+    ...
+    <!-- 페이지 개별 스크립트 맨 마지막 -->
+    <script th:replace="${pageScript} ?: ~{}"></script>
+  </body>
+  </html>
+  ```
+
+    3. form.html 수정
+    ```html
+    ```
+
+    4. trmbowwyg 에디터를 사용하지 않는 나머지 html
+    ```html
+    <!doctype html>
+    <html
+      lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content}, ~{})}"
+    >
+    ```
+  - jQuery CDN 링크 layout.html 추가
+
+#### 관리자 기능
+
+- 관리자 구분
+  - `ROLE_USER` : 일반 사용자
+  - `ROLE_ADMIN` : 관리자
+
+- 게시글 삭제
+
+#### 웹사이트 홈 페이지
+
+- HomeController 생성
+- templates/home.html 생성
+
+- bootstrap 공식 예제 carousel 활용
+
+  ![alt text](image-34.png)
+
 #### 스터디모집 웹사이트
 
 #### 게시판 내용 웹에디터 추가
