@@ -1119,12 +1119,29 @@ NOCYCLE;
   ```
 
     3. form.html 수정
-    ```html
-    ```
+
+   ```html
+  <!doctype html>
+  <!-- 추가된 pageScript 레이아웃 영역 작성 -->
+  <html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{layout :: layout(~{::content}, ~{::pageScripts})}"
+  >
+    ...
+    <!-- pageScripts를 사용하는 페이지 -->
+    <script th:fragment="pageScripts">
+      $(function () {
+        $("#content").trumbowyg();
+      });
+    </script>
+  </html>
+  ```
 
     4. trmbowwyg 에디터를 사용하지 않는 나머지 html
     ```html
     <!doctype html>
+    <!-- pageScripts를 사용안하기때문에 ~{} 표현 -->
     <html
       lang="ko"
       xmlns:th="http://www.thymeleaf.org"
@@ -1150,8 +1167,6 @@ NOCYCLE;
 
   ![alt text](image-34.png)
 
-#### 스터디모집 웹사이트
+## Next Chapter
 
-#### 게시판 내용 웹에디터 추가
-
-#### 조회수 증가
+[ToyProject](./README3.md)
