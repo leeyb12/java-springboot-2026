@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>음식 기록하기</title>
+    <style>
+        .form-container { width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        .field { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+        .submit-btn { width: 100%; padding: 10px; background: #3498db; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>📝 오늘 뭐 먹었나요?</h2>
+    <form th:action="@{/food/add}" th:object="${food}" method="post">
+        <div class="field">
+            <label>음식 이름</label>
+            <input type="text" th:field="*{name}" placeholder="예: 돈까스" required>
+        </div>
+        
+        <div class="field">
+            <label>카테고리</label>
+            <select th:field="*{category}">
+                <option value="한식">한식</option>
+                <option value="일식">일식</option>
+                <option value="중식">중식</option>
+                <option value="양식">양식</option>
+                <option value="기타">기타</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>별점 (1~5)</label>
+            <input type="number" th:field="*{rating}" min="1" max="5" required>
+        </div>
+
+        <div class="field">
+            <label>먹은 날짜</label>
+            <input type="date" th:field="*{eatDate}" required>
+        </div>
+
+        <div class="field">
+            <label>메모</label>
+            <textarea th:field="*{memo}" rows="4" placeholder="맛은 어땠나요?"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">저장하기</button>
+    </form>
+    <div style="margin-top: 10px; text-align: center;">
+        <a th:href="@{/food/list}">취소하고 돌아가기</a>
+    </div>
+</div>
+</body>
+</html>

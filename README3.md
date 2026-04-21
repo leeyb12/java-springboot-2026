@@ -65,15 +65,31 @@ StudyGroup
 
 - 스터디포스트 상세보기 확인
 
+## 13일차
+
+#### 스터디모집 기능
+
+- 스터디포스트 아래 댓글기능
+  - dto, comment 클래스
+  - validation, commentForm 클래스
+  - mapper, commentMapper 인터페이스
+  - templates/mapper, commentMapper.xml SQL
+  - service, commentService 클래스
+  - controller, CommentController 클래스
+  - controller, StudyPostController.detail() 댓글 목록, 폼 추가
+  - html, post/detail.html 화면 추가
+
 #### 필요이슈
 
 - home.html 관리자 관리할 화면 생성
 - home.html 동적바인딩
+- 기존 게시판 상세 디자인 StudyPost 상세 형태로 변경
 - 로그아웃 후 home으로 이동
 - 에러페이지 필요
 - Join, Login 페이지 버튼 디자인 변경
 - 스터디포스트 페이징
 - 전체 푸터 작업
+- 파일 업로드
 - Spring Security
 - JWT
 - React와 연동

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pknu26.food.mapper.FoodMapper">
+
+    <sql id="searchCondition">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (NAME LIKE '%' || #{keyword} || '%' OR MEMO LIKE '%' || #{keyword} || '%')
+            </if>
+            <if test="category != null and category != ''">
+                AND CATEGORY = #{category}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectAllFoods" resultType="com.pknu26.food.dto.Food">
+        SELECT * FROM FOOD
+        <include refid="searchCondition" />
+        ORDER BY EAT_DATE DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+
+    <select id="countFoods" resultType="long">
+        SELECT COUNT(*) FROM FOOD
+        <include refid="searchCondition" />
+    </select>
+
+    <insert id="insertFood">
+        INSERT INTO FOOD (ID, NAME, CATEGORY, RATING, MEMO, EAT_DATE)
+        VALUES (FOOD_SEQ.NEXTVAL, #{name}, #{category}, #{rating}, #{memo}, #{eatDate})
+    </insert>
+
+    <select id="selectFoodById" resultType="com.pknu26.food.dto.Food">
+        SELECT * FROM FOOD WHERE ID = #{id}
+    </select>
+
+    <update id="updateFood">
+        UPDATE FOOD SET NAME=#{name}, CATEGORY=#{category}, RATING=#{rating}, MEMO=#{memo}, EAT_DATE=#{eatDate}
+        WHERE ID=#{id}
+    </update>
+
+    <delete id="deleteFood">
+        DELETE FROM FOOD WHERE ID = #{id}
+    </delete>
+</mapper>
