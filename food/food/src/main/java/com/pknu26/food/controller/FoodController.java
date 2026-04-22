@@ -37,39 +37,34 @@ public class FoodController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("category", category);
 
-        // 수정: "redirect:/food/list" -> 무한 루프에 빠질 수 있음
-        return "food/list"; // src/main/resources/templates/food/list.html 을 실행
+
+        return "food/list"; 
     }
 
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("food", new Food());
-        // 수정: "redirect:/food/addForm" -> "food/addForm"
-        return "food/addForm"; // templates/food/addForm.html 을 보여줌
+        return "food/addForm"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id, Model model) {
         model.addAttribute("food", foodMapper.selectFoodById(id));
-        // 수정: "redirect:/food/editForm" -> "food/editForm"
-        return "food/editForm"; // templates/food/editForm.html 을 보여줌
+        return "food/editForm"; 
     }
 
-    // 등록, 수정, 삭제 후 목록으로 돌아갈 때는 redirect가 맞습니다.
     @PostMapping("/add")
     public String add(Food food) { 
         foodMapper.insertFood(food);
-        return "redirect:/food/list"; // 처리가 끝난 후 목록 주소로 이동
+        return "redirect:/food/list"; 
     }
 
-    // 수정 화면에서 [수정 완료] 버튼을 눌렀을 때 실행되는 메서드
     @PostMapping("/edit")
     public String edit(Food food) {
-        foodMapper.updateFood(food); // XML의 <update id="updateFood"> 호출
-        return "redirect:/food/list"; // 수정 후 목록으로 이동
+        foodMapper.updateFood(food);
+        return "redirect:/food/list"; 
     }
 
-    // (참고) 삭제 기능도 없다면 아래 코드를 추가하세요
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         foodMapper.deleteFood(id);
