@@ -79,31 +79,41 @@ StudyGroup
   - controller, StudyPostController.detail() 댓글 목록, 폼 추가
   - html, post/detail.html 화면 추가
 
+- 스터디신청 기능
+  - dto, StudyApplication 클래스
+  - validation, StudyApplicationForm 클래스
+  - mapper, StudyApplicationMapper 인터페이스
+  - templates/mapper, StudyApplication.xml
+  - service, StudyApplicationService 클래스
+  - controller, StudyApplicaitonController 클래스
+  - html, post/detail.html 화면 추가
+
 # 14일차
 
 #### 스터디모집 신청 계속
 
 #### TIP
 
-- Controller는 사용자의 요청을 받아서 Service로 전달한 뒤 받은 결과를 View로 출력하는 기능. 로르인
+- Controller는 사용자의 요청을 받아서 Service로 전달한 뒤 받은 결과를 View로 출력하는 기능. 로그인세션 처리
 - Service는 요청에서 Model로 데이터 요청, 돌려받아서 비즈니스로직 처리
+- View는 돌려받은 데이터들을 표현
+
+![alt text](image-38.png)
 
 #### 필요이슈
 
 - [x] 컨트롤러 post 메서드 파라미터 순서 중요
   - 입력검증 파라미터 다음에 BingResult가 위치해야 함!
   - @Valid CommentForm commentForm, BindingResult bindingResult, ...
-
 - [x] 스터디 신청 문제 - 신청리스트 띄워서 일단 반정도 완료
   - 중복신청 알림 없음
   - 신청 후 메시지 없음
-
-- [x] 각 입력폼 에러메시지 디자인 동일
-  - 글로벌 에러는 alert 디자인으로 
-  - 각 입력별 에러메시지는 단순 빨간색으로 
+- [x] 각 입력폼 에러메시지 디자인 통일
+  - 글로벌 에러는 alert 디자인으로
+  - 각 입력별 에러메시지는 단순 빨간색으로
 - [x] 전체 인원이 2명인데 3명 승인 가능
 - [x] 승인한 멤버에 대해서 다시 거절하는 기능
-- [x] 인원이 전부 신청승인되고나면 스터디포스트 자체 상태가 CLOSED가 되어야 함
+- [x] 인원이 전부 신청승인되고나면 스터디포스트 자체 상태가 CLOSED 가 되어야 함
 - [x] 마감된 스터디에 신청버튼이 존재
 
 - [x] 스터디포스트 페이징
@@ -112,20 +122,70 @@ StudyGroup
   - BoardServiceImpl 클래스 참조해서 StudyPostService 클래스 getPostList 메서드 변경
   - StudyPostController 클래스 수정
   - templates/post/list.html 페이징 추가
+- [x] Join, Login.html 버튼 디자인 변경
 
 - [x] 게시판 작성자 입력 불필요
   - dto.BoardForm @NotBlank 어노테이션 삭제
-- [x] 게시글 댓글 등록 오류메시지 미출력
-- [ ] 기존 게시판 상세 디자인 StudyPost 상세 형태로 변경
-- 에러페이지 필요
-- 로그아웃 후 home으로 이동
+- [x] 게시판 댓글 등록 오류메시지 미출력
+  - RedirectAttributes 파라미터 사용
+- [x] 기존 게시판 상세 디자인 StudyPost 상세 형태와 동일하게 변경
+- [x] 로그아웃 후 home으로 이동
+- [x] 전체 푸터 작업
+  - Bootstrap 클래스만으로 가능
+
+![alt text](image-39.png)
+
+## 15일차
+
+### StudyGroup 계속
+
+#### 관리자 홈관리화면
+
+- 컨텐츠 관리
+  - Site_Content 테이블 생성
+  - dto, Site 클래스
+  - validation, SiteForm 클래스
+  - mapper, SiteMapper 인터페이스
+  - templates/mapper, SiteMapper.xml
+  - service, SiteService 클래스
+  - controller, SiteController 클래스
+  - controller, HomeController home 메서드 수정
+
+  ![alt text](image-41.png)
+
+- 이미지 관리
+  - application.properties 에 저장경로 설정!
+  - config, FileProperties 클래스 추가
+  - config, WebMvcConfig 클래스 추가
+  - Site_Image 테이블 생성
+  - dto, SiteImage 클래스
+  - validation, SiteImageForm 클래스
+  - mapper, SiteImageMapper 인터페이스
+  - templates/mapper, SiteImageMapper.xml
+  - service, SiteImageService 클래스
+  - controller, SiteImageController 클래스
+  - controller, HomeController home 메서드 수정 
+
+#### 남은 이슈
+
+- [x] favicon 추가
+  - 자동인식방법 resources/static.favicon.ico
+  - png to ico 변환필요
+
+  ![alt text](image-40.png)
+
+- [x]에러페이지 필요
+  - 404 에러 : Page Not Found 
+  - 500 에러 : Internal Server Error
+
 - home.html 관리자 관리할 화면 생성
-- home.html 동적바인딩
-- [x] Join, Login.html 버튼 디자인 변경
-- 전체 푸터 작업
+  - Hero 이미지 : 웹 전체 화면을 채우는 배경이미지
+  - Carousel : 이미지가 일정시간마다 전환, 또는 버튼클릭으로 전환되는 디자인
+  - 현재 화면
+
+
 - Spring Security
 - JWT
-- React와 연동
 - 파일 업로드
 
 - 미니프로젝트 팀 구성

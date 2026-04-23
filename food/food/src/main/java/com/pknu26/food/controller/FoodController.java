@@ -38,19 +38,19 @@ public class FoodController {
         model.addAttribute("category", category);
 
 
-        return "food/list"; 
+        return "/food/list"; 
     }
 
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("food", new Food());
-        return "food/addForm"; 
+        return "/food/addForm"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id, Model model) {
         model.addAttribute("food", foodMapper.selectFoodById(id));
-        return "food/editForm"; 
+        return "/food/editForm"; 
     }
 
     @PostMapping("/add")
