@@ -186,6 +186,7 @@ StudyGroup
 
 - Spring Security
 - JWT
+
 - 파일 업로드
 
 - 미니프로젝트 팀 구성
