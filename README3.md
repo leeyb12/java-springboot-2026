@@ -190,6 +190,103 @@ StudyGroup
 
   https://github.com/user-attachments/assets/f822ce2b-16f3-4900-bcd7-b5724d0aa959
 
+#### 추가개발 이슈
+
+- [ ] Features, Gallery 부분 관리자 데이터 처리, 홈화면 이미지 표시
+  - Carousel 기능과 동일하게 구현 
+
+  ![alt text](image-44.png)
+
+  ![alt text](image-45.png)
+
+- [ ] Footer 영역, privacy(개인정보처리방침), Terms(정책) 추가 개발필요
+- [ ] 각 입력태그에 PlaceHolder 추가
+- [ ] 게시판 댓글 작성자 로그인 아이디 바로 표시하게 
+- [ ] 게시판 첨부파일 추가
+- [ ] 댓글 삭제 확인창 띄우기
+- [ ] 관리자 사이트컨텐츠 등록화면, 컨텐츠키를 콤보박스로 변경해보기
+- [ ] 관리자 사이트이미지 등록화면, 이미지키를 콤보박스로 변경해보기
+- [ ] 회원가입시 이메일이나 주소등 추가 등록데이터 입력
+- [ ] 로그인 후 비번변경이나 개인정보 수정화면
+
+### Spring Security
+
+#### 개요
+
+- Spring 기반 애플리케이션 인증(Authentication), 권한(Authorization)을 담당하는 보안 프레임워크
+  - 인증 : 로그인 기능, 세션처리
+  - 권한 : 접근제어, 글쓰기 가능여부
+
+- 기본동작
+  - 요청 -> 필터체인통과
+  - 인증여부 확인
+  - 미 로그인시 로그인페이지로 이동
+  - 로그인 성공 후 세션에 사용자 정보 저장
+
+#### 진행순서
+
+- 의존성 추가
+- 비밀번호 암호화 PasswordEncoder 등록
+- CustomUserDetails 생성
+- UserDetailsService 생성
+- SecurityConfig 생성
+- 기존 UserController 수정
+- 로그인 페이지 수정
+- layout.html SpringSecurity thymeleaf 추가
+  - session.loginUser 제거
+  - sec:authorize 속성으로 변경
+- Thymeleaf 로그인/관리자 조건 처리
+
+  ```html
+  <!-- 제거 -->
+  <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+  </div>
+  ```
+
+- 기타 Controller에서 session 내용 제거
+
+#### Spring Security 개발
+
+- build.gradle 의존성 추가
+- 실행화면
+
+## 17일차
+
+### Spring Security
+
+#### build.gradle 적용
+
+- 서버 실행
+  ```powershell
+  2026-04-27T09:20:23.605+09:00  WARN 19324 --- [studygroup] [  restartedMain] .s.a.UserDetailsServiceAutoConfiguration : 
+  # 임시 패스워드
+  Using generated security password: fb2a49db-c87e-4d23-bc5c-b9cbdaf58bfc
+
+  This generated password is for development use only. Your security configuration must be updated before running your application in production.
+  ```
+
+- Spring Security Crpto 라이브러리 -> 제거
+
+### JWT
+
+#### 개요
+
+- JSON Web Token : 로그인 후에 서버에서 발급하는 토큰 기반의 인증방식
+  - React, Node.js 등의 다른 프론트엔드와 연계하는 풀스택개발시 사용하는 인증방식
+  - 서버에 세션을 저장안함. 토큰으로 인증 대체 
+
+#### JWT 반영순서
+
+- 로그인 > JTW 발급 > 요청 시 JWT 검증 > 인증처리
+
+#### 진행순서
+
+- build.gradle 의존성 추가
+- application.properties JWT 설정 추가
+- config, JWtProvider 
+
+
 #### 남은 이슈
 
 - [x] favicon 추가
@@ -214,6 +311,8 @@ StudyGroup
 - JWT
 
 - 파일 업로드
+
+- [x] 세군데 있던 checkAdmin 메서드 정리. AdminHelper 클래스 생성
 
 - 미니프로젝트 팀 구성
 - 미니프로젝트 주제

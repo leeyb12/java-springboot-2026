@@ -91,14 +91,4 @@ public class SiteController {
         this.siteService.delete(id);
         return "redirect:/admin/site/list";
     }
-    
-    // 한번더 관리자 체크
-    private void checkAdmin(HttpSession session) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-
-        if (loginUser == null || !"ROLE_ADMIN".equals(loginUser.getRole())) {            
-            throw new RuntimeException("관리자만 접근할 수 있습니다.");
-            // TODO : 에러페이지 추가 필요!
-        }
-    }
 }

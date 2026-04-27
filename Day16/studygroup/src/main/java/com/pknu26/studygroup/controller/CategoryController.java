@@ -89,12 +89,4 @@ public class CategoryController {
         this.categoryService.deleteCategory(categoryId);
         return "redirect:/admin/categories";
     }
-
-    private void checkAdmin(HttpSession session) {
-        LoginUser loginUser = (LoginUser) session.getAttribute("loginUser");
-
-        if (loginUser == null || !"ROLE_ADMIN".equals(loginUser.getRole())) {
-            throw new RuntimeException("관리자만 접근할 수 있습니다.");
-        }
-    }
 }
