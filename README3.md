@@ -284,8 +284,20 @@ StudyGroup
 
 - build.gradle 의존성 추가
 - application.properties JWT 설정 추가
-- config, JWtProvider 
+- config, JWtProvider 클래스 생성
 
+- dto/api, API 요청/응답용 dto 생성
+- security, JwtAuthenticationFilter 클래스 생성
+- controller, ApiAuthController 클래스 생성
+- config, SecurityConfig 수정
+
+- 테스트 콘트롤러 
+
+## 18일차 
+
+### JWT 계속
+
+### 구글 로그인
 
 #### 남은 이슈
 
