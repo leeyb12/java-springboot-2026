@@ -283,6 +283,7 @@ StudyGroup
 #### 진행순서
 
 - build.gradle 의존성 추가
+  - https://mvnrepository.com/ 에서 확인
 - application.properties JWT 설정 추가
 - config, JWtProvider 클래스 생성
 
@@ -297,7 +298,123 @@ StudyGroup
 
 ### JWT 계속
 
-### 구글 로그인
+#### CORS, CSRF
+
+- CORS : Cross-Origin Resource Sharing 프로토콜
+  - 서로 다른 오리진(서버)에서 리소스나 상호작용을 위해 브라우저에서 실행되는 스크립트
+  - 서버간에 통신시 기본 보호 기능
+  - com.pknu26.studygroup, com.pknu26.apiboard 둘 사이에 접근불가
+  - CORS로 오픈 설정 후
+
+- CSRF : Cross-Site Request Forgery 보안
+  - 명시적 동의없이 사용자를 대신 웹앱에서 악의적인 행동을 취하는 공격
+
+#### API 테스트
+
+- Postman 테스트
+  ![alt text](image-46.png)
+  - 로그인 실패하면 
+  - 성공하면 json를
+
+  ```json
+  {
+    "tokenType": "Bearer",
+    "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwa251IiwidXNlcklkIjo0LCJuYW1lIjoi67aA6rK964yAIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc3NzM0NDU4OCwiZXhwIjoxNzc3MzQ4MTg4fQ.2s2TR4SXQUJWFIy2mMx-j9OwQd3iZIl5S7SW6U0xNfMIG-KH3b7Xe7rBZGMX8m8t",
+    "userId": 4,
+    "loginId": "pknu",
+    "name": "부경대",
+    "role": "ROLE_USER"
+  }
+  ```
+
+### 소셜 로그인
+
+#### 구글 로그인
+
+```text 
+USER_ACCOUNT
+ └─ 우리 서비스 사용자 계정
+
+Spring Security Form Login
+ └─ /user/login
+
+JWT API Login
+ └─ /api/auth/login
+
+추가할 Google Login
+ └─ /oauth2/authorization/google
+ └─ 성공 후 USER_ACCOUNT + USER_SOCIAL_ACCOUNT 저장
+```
+
+#### OAuth
+
+- Open Authorization : 아이디와 패스워드를 넘겨주지 않고, 다른 서비스의 기능을 안전하게 빌려쓰는 기술
+  - 구글, 네이버, 카카오, 페이스북, ...
+
+- OAuth 1.0 : 암호화방식 너무 복잡(암호화 지옥), 사용하기 어려움
+- OAuth 2.0 : 복잡한 서명 삭제, 역할분담, 유연한 처리 가능
+
+#### 소셜 로그인 구현
+
+- build.gradle에 의존성 추가
+- 구글 개발자콘솔 로그인 : https://console.cloud.google.com/
+  - 새 프로젝트 생성
+
+  ![alt text](image-47.png)
+  - 프로젝트 선택 > 탐색메뉴(햄버거메뉴)
+  - API 및 서비스 
+    - 사용자 인증 정보 > +사용자 인증정보 만들기 클릭
+  - OAuth 동의화면 클릭 > 시작하기 클릭
+  - OAuth 클라이언트 ID 클릭
+
+  ![alt text](image-48.png)
+  - 작성 후 만들기 클릭
+
+  ![alt text](image-49.png)
+  - json 다운로드 
+
+- application.properties 구글OAuth 정보 추가
+
+- powershell에서 구글클라이언트아이디와 비밀키를 윈도우 환경변수에 등록
+
+  ```powershell
+  > setx GOOGLE_CLIENT_ID "본인_구글클라이언트_아이디"
+
+  성공: 지정한 값을 저장했습니다.
+  > setx GOOGLE_CLIENT_SECRET "본인_구글클라리언트_시크릿키"
+
+  성공: 지정한 값을 저장했습니다.
+
+  # 확인 파워쉘 재시작 후
+  > echo $env:GOOGLE_CLIENT_ID
+  > echo $env:GOOGLE_CLIENT_SECRET  
+  ```
+
+- 소셜 로그인용 연결용 테이블 생성
+- 기존 로그인 테이블 password 필드 NOT NULL -> NULL로 변경(소셜로그인으로는 패스워드 전달안됨)
+- LOGIN_ID 길이 변경 VARCHAR2(200). 이메일 입력
+
+- dto, UserSocialAccount 클래스
+- mapper, UserSocialAccountMapper 인터페이스
+- resources/mapper, UserSocialAccountMapper.xml
+- mapper, UserMapper 인터페이스에 신규 메서드 추가
+- resources/mapper, UserMapper.xml 신규 SQL 추가
+
+- OAuth2 구글로그인 서비스 클래스
+  - security, CustomOAuth2UserService 클래스
+    1. 구글 사용자 정보받기
+    2. provider = google
+    3. providerUserId = 구글 Subject
+    4. USER_SOCIAL_ACCOUNT 테이블에 이미 정보가 있으면 로그인처리
+    5. 없으면 USER_ACCOUNT 생성
+    6. USER_SOCIAL_ACCOUNT 생성
+    7. Spring Security 인증 처리
+
+- config, SecurityConfig에 OAuth2 Login 추가
+
+  ![alt text](image-51.png)
+
+  ![alt text](image-50.png)
 
 #### 남은 이슈
 
@@ -318,13 +435,8 @@ StudyGroup
 
   - 파일 업로드
 
-
-- Spring Security
-- JWT
-
-- 파일 업로드
-
 - [x] 세군데 있던 checkAdmin 메서드 정리. AdminHelper 클래스 생성
+- [ ] 
 
 - 미니프로젝트 팀 구성
 - 미니프로젝트 주제
